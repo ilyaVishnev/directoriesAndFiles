@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<H1>Директории и файлы</H1>
+<br/>
+<form th:action="@{/list}" method="post">
+    Новая директория : <input type="text" name="record"></input>
+    <button type="submit" style="margin-left: 2px">Добавить в список</button>
+</form>
+<br/>
+<h2>Список директорий и файлов</h2><br/>
+<table width="100%" style="float: top; margin-top: 0px;margin-right: 10px">
+    <tr>
+        <td>Дата</td>
+        <td>Базовая директория</td>
+        <td>Директорий</td>
+        <td>Файлов</td>
+        <td>Суммарный размер файлов</td>
+        <td></td>
+    </tr>
+    <tr th:each="record : ${records}">
+        <td th:text="${record.dateCreation}"></td>
+        <td th:text="${record.directory}"></td>
+        <td th:text="${record.countOfDirectories}"></td>
+        <td th:text="${record.countOfFiles}"></td>
+        <td th:text="${record.sizeOfAll}"></td>
+        <td>
+            <form th:action="@{/files}" method="GET">
+                <button type="submit">Файлы</button>
+                <input type="hidden" th:value="${record.id}" name="recordId"/>
+            </form>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
